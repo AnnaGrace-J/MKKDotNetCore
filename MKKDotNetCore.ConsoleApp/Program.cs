@@ -140,6 +140,8 @@ DapperExample dapperExample = new DapperExample();
 //dapperExample.Read();
 //dapperExample.Create(title: "dfasdf", author: "dfasdf",content: "dfasdf");
 //dapperExample.Update(id:1004 , title: "Rarr", author: "Garrr", content: "Marrr");
-dapperExample.Delete(id: 1005);
+//dapperExample.Delete(id: 1005);
+dapperExample.Edit(1);
+dapperExample.Edit(1009);
 
 Console.ReadKey();
