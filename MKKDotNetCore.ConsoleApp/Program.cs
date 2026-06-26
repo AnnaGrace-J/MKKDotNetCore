@@ -135,6 +135,11 @@ AdoDotNetExample adoDotNetExample = new AdoDotNetExample();
 //adoDotNetExample.Create();
 //adoDotNetExample.Edit();
 //adoDotNetExample.Update();
-adoDotNetExample.Delete();
+//adoDotNetExample.Delete();
+DapperExample dapperExample = new DapperExample();
+//dapperExample.Read();
+//dapperExample.Create(title: "dfasdf", author: "dfasdf",content: "dfasdf");
+//dapperExample.Update(id:1004 , title: "Rarr", author: "Garrr", content: "Marrr");
+dapperExample.Delete(id: 1005);
 
 Console.ReadKey();
