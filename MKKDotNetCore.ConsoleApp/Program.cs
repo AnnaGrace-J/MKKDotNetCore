@@ -141,7 +141,11 @@ DapperExample dapperExample = new DapperExample();
 //dapperExample.Create(title: "dfasdf", author: "dfasdf",content: "dfasdf");
 //dapperExample.Update(id:1004 , title: "Rarr", author: "Garrr", content: "Marrr");
 //dapperExample.Delete(id: 1005);
-dapperExample.Edit(1);
-dapperExample.Edit(1009);
+//dapperExample.Edit(1);
+//dapperExample.Edit(1009);
+
+EfCoreExample efCoreExample = new EfCoreExample();
+//efCoreExample.Read();
+efCoreExample.Create(title: "EfCore Title", author: "EfCore Author", content: "EfCore Content");
 
 Console.ReadKey();
