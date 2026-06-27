@@ -20,8 +20,8 @@ namespace MKKDotNetCore.ConsoleApp
                 //    Console.WriteLine(item.BlogAuthor);
                 //    Console.WriteLine(item.BlogContent);
 
-                var lst = db.Query<BlogDataModel>(query).ToList();
-                foreach (BlogDataModel item in lst)
+                var lst = db.Query<BlogDapperDataModel>(query).ToList();
+                foreach (BlogDapperDataModel item in lst)
                 {
                     Console.WriteLine(item.BlogId);
                     Console.WriteLine(item.BlogTitle);
@@ -52,7 +52,7 @@ namespace MKKDotNetCore.ConsoleApp
             using (IDbConnection db = new SqlConnection(_connectionString))
 
             {
-                int result = db.Execute(sql: query, param: new BlogDataModel
+                int result = db.Execute(sql: query, param: new BlogDapperDataModel
                 {
                     BlogTitle = title,
                     BlogAuthor = author,
@@ -74,7 +74,7 @@ namespace MKKDotNetCore.ConsoleApp
             ";
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                int result = db.Execute(sql: query, param: new BlogDataModel
+                int result = db.Execute(sql: query, param: new BlogDapperDataModel
                 {
                     BlogId = id,
                     BlogTitle = title,
@@ -93,7 +93,7 @@ namespace MKKDotNetCore.ConsoleApp
             ";
             using (IDbConnection db = new SqlConnection(_connectionString))
             {
-                int result = db.Execute(sql: query, param: new BlogDataModel
+                int result = db.Execute(sql: query, param: new BlogDapperDataModel
                 {
                     BlogId = id,
                 });
@@ -115,7 +115,7 @@ namespace MKKDotNetCore.ConsoleApp
                 //    Console.WriteLine(item.BlogAuthor);
                 //    Console.WriteLine(item.BlogContent);
 
-                var item =  db.Query<BlogDataModel>(sql: query, param: new BlogDataModel
+                var item =  db.Query<BlogDapperDataModel>(sql: query, param: new BlogDapperDataModel
                 {
                     BlogId = id,
                 }).FirstOrDefault();
