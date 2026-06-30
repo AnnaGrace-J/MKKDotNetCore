@@ -60,22 +60,109 @@ SELECT [BlogId]
         }
 
 
-        //[HttpGet("{id}")]
-        //public IActionResult GetBlog(int id)
-        //{
-            
-        //}
+        [HttpGet("{id}")]
+        public IActionResult GetBlog(int id)
+        {
+            SqlConnection connection = new SqlConnection(_connectionString);
+            connection.Open();
 
-        //[HttpPost]
-        //public IActionResult CreateBlogs(TblBlog blog)
-        //{
-            
-        //}
-        //[HttpPut("{id}")]
-        //public IActionResult UpdateBlogs(int id, TblBlog blog)
-        //{
-            
-        //}
+            string query = @"
+SELECT [BlogId]
+      ,[BlogTitle]
+      ,[BlogAuthor]
+      ,[BlogContent]
+      ,[DeleteFlag]
+FROM [dbo].[Tbl_Blog]
+WHERE BlogId = @BlogId";
+
+            SqlCommand cmd = new SqlCommand(query, connection);
+            cmd.Parameters.AddWithValue("@BlogId", id);
+
+            SqlDataReader reader = cmd.ExecuteReader();
+
+            if (!reader.Read())
+            {
+                connection.Close();
+                return NotFound("No Data Found.");
+            }
+
+            BlogViewModel item = new BlogViewModel
+            {
+                Id = Convert.ToInt32(reader["BlogId"]),
+                Title = Convert.ToString(reader["BlogTitle"]),
+                Author = Convert.ToString(reader["BlogAuthor"]),
+                Content = Convert.ToString(reader["BlogContent"]),
+                DeleteFlag = Convert.ToBoolean(reader["DeleteFlag"])
+            };
+
+            connection.Close();
+
+            return Ok(item);
+
+        }
+
+        [HttpPost]
+        public IActionResult CreateBlogs(TblBlog blog)
+        {
+            SqlConnection connection = new SqlConnection(_connectionString);
+            connection.Open();
+
+            string query = @"
+INSERT INTO [dbo].[Tbl_Blog]
+(
+    BlogTitle,
+    BlogAuthor,
+    BlogContent,
+    DeleteFlag
+)
+VALUES
+(
+    @BlogTitle,
+    @BlogAuthor,
+    @BlogContent,
+    0
+)";
+
+            SqlCommand cmd = new SqlCommand(query, connection);
+
+            cmd.Parameters.AddWithValue("@BlogTitle", blog.BlogTitle);
+            cmd.Parameters.AddWithValue("@BlogAuthor", blog.BlogAuthor);
+            cmd.Parameters.AddWithValue("@BlogContent", blog.BlogContent);
+
+            int result = cmd.ExecuteNonQuery();
+
+            connection.Close();
+
+            return Ok(result > 0 ? "Saving Successful." : "Saving Fail.");
+        }
+        [HttpPut("{id}")]
+        public IActionResult UpdateBlogs(int id, TblBlog blog)
+        {
+            SqlConnection connection = new SqlConnection(_connectionString);
+            connection.Open();
+
+            string query = @"
+UPDATE [dbo].[Tbl_Blog]
+SET
+    BlogTitle = @BlogTitle,
+    BlogAuthor = @BlogAuthor,
+    BlogContent = @BlogContent,
+    DeleteFlag = 0
+WHERE BlogId = @BlogId";
+
+            SqlCommand cmd = new SqlCommand(query, connection);
+
+            cmd.Parameters.AddWithValue("@BlogId", id);
+            cmd.Parameters.AddWithValue("@BlogTitle", blog.BlogTitle);
+            cmd.Parameters.AddWithValue("@BlogAuthor", blog.BlogAuthor);
+            cmd.Parameters.AddWithValue("@BlogContent", blog.BlogContent);
+
+            int result = cmd.ExecuteNonQuery();
+
+            connection.Close();
+
+            return Ok(result > 0 ? "Updating Successful." : "Updating Fail.");
+        }
         [HttpPatch("{id}")]
         public IActionResult PatchBlogs(int id, BlogViewModel blog)
         {
@@ -126,13 +213,28 @@ SELECT [BlogId]
 
             return Ok(result>0? "Updating Successful." : "Updating Fail");
         }
-        //[HttpDelete("{id}")]
-        //public IActionResult DeleteBlogs(int id)
-        //{
+        [HttpDelete("{id}")]
+        public IActionResult DeleteBlogs(int id)
+        {
 
-            
+            SqlConnection connection = new SqlConnection(_connectionString);
+            connection.Open();
+
+            string query = @"
+DELETE FROM [dbo].[Tbl_Blog]
+WHERE BlogId = @BlogId";
+
+            SqlCommand cmd = new SqlCommand(query, connection);
+
+            cmd.Parameters.AddWithValue("@BlogId", id);
+
+            int result = cmd.ExecuteNonQuery();
+
+            connection.Close();
+
+            return Ok(result > 0 ? "Deleting Successful." : "Deleting Fail.");
 
 
-        //}
+        }
     }
 }
